@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import { sections } from "./App";
 
 export const SECTION_LIST_MOCK_DATA = [
   {
@@ -45,25 +46,12 @@ export function getSectionListData(data) {
   // The data property should contain an array of menu items.
   // Each item has the following properties: "id", "title" and "price"
 
-  const categories = [];
-  const menuItems = [];
+  const menuItems = sections.map((category) => ({ title: category, data: [] }));
 
-  data.forEach((element) => {
-    const category = element.category;
-    if (!categories.includes(category)) {
-      categories.push(category);
-    }
-  });
-
-  categories.forEach((element) => {
-    const dataStructure = { title: element, data: [] };
-    menuItems.push(dataStructure);
-  });
-
-  menuItems.forEach((element) => {
+  menuItems.forEach((category) => {
     data.forEach((product) => {
-      if (element.title === product.category) {
-        element.data.push({
+      if (category.title === product.category) {
+        category.data.push({
           title: product.title,
           id: product.id,
           price: product.price,
