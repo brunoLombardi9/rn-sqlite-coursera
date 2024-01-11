@@ -45,7 +45,34 @@ export function getSectionListData(data) {
   // The data property should contain an array of menu items.
   // Each item has the following properties: "id", "title" and "price"
 
-  return SECTION_LIST_MOCK_DATA;
+  const categories = [];
+  const menuItems = [];
+
+  data.forEach((element) => {
+    const category = element.category;
+    if (!categories.includes(category)) {
+      categories.push(category);
+    }
+  });
+
+  categories.forEach((element) => {
+    const dataStructure = { title: element, data: [] };
+    menuItems.push(dataStructure);
+  });
+
+  menuItems.forEach((element) => {
+    data.forEach((product) => {
+      if (element.title === product.category) {
+        element.data.push({
+          title: product.title,
+          id: product.id,
+          price: product.price,
+        });
+      }
+    });
+  });
+
+  return menuItems;
 }
 
 export function useUpdateEffect(effect, dependencies = []) {
